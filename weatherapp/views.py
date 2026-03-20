@@ -20,8 +20,6 @@ def home(request):
     weather_url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={WEATHER_API_KEY}'
     PARAMS= {'units': 'metric'}
 
-    UNSPLASH_KEY = "d7ZNHgIr9AjNTRKDB6gaR6UoMVceb-ZrFTYYmIK4Suw"
-
     query = f"{city} skyline"
 
     url = "https://api.unsplash.com/search/photos"
@@ -49,14 +47,20 @@ def home(request):
             icon= data['weather'][0]['icon']
             temp= data['main']['temp']
             day= datetime.date.today()
-            return render(request,'index.html' , {'description':description , 'icon':icon ,'temp':temp , 'day':day , 'city':city , 'exception_occurred':False ,'image_url':image_url})
+            request.session['city'] = city
+            timezone_offset = data.get('timezone', 0)
+            utc_time = datetime.datetime.utcnow()
+            city_time = utc_time + datetime.timedelta(seconds=timezone_offset)
+            formatted_time = city_time.strftime("%I:%M %p")
+
+            return render(request,'index.html' , {'description':description , 'icon':icon ,'temp':temp , 'day':day , 'city':city ,'time': formatted_time, 'timezone_offset': timezone_offset,'exception_occurred':False ,'image_url':image_url})
 
     except:
             
             exception_occurred= True
             messages.error(request,'Entered data is not available to API')
             day=datetime.date.today()
-            return render(request,'index.html' ,{'description':'clear sky', 'icon':'01d'  ,'temp':25 , 'day':day , 'city':'Gummersbach' , 'exception_occurred':exception_occurred } )
+            return render(request,'index.html' ,{'description':'clear sky', 'icon':'01d'  ,'temp':25 , 'day':day , 'city':'Gummersbach' ,'time': 'N/A', 'exception_occurred':exception_occurred } )
 
 
         

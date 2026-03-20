@@ -28,6 +28,7 @@
     <div class="weather">
       <div class="left">
         <h2 class="temp">{{ temp }}&#176; C</h2>
+        <h2 id="live-time">{{ time }}</h2>
         <h2 class="city">{{ city }}</h2>
       </div>
       <div class="right">
@@ -51,5 +52,26 @@
     </script>
 {% endif %}
 
+<script>
+    const offset = Number("{{ timezone_offset|default:'0' }}");
+    
+    function updateTime() {
+        const now = new Date();
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+        const cityTime = new Date(utc + (offset * 1000));
+
+        const hours = cityTime.getHours().toString().padStart(2, '0');
+        const minutes = cityTime.getMinutes().toString().padStart(2, '0');
+        const seconds = cityTime.getSeconds().toString().padStart(2, '0');
+
+        const el = document.getElementById("live-time");
+        if (el) {
+            el.innerText = `${hours}:${minutes}:${seconds}`;
+        }
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+</script>
 </body>
 </html>
