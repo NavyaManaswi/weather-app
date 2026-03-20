@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4475ef, #62b8f5);
+            font-family: "Poppins", sans-serif;
+            color: white;
+            text-align: center;
+            background-image: url('https://plus.unsplash.com/premium_photo-1673292293042-cafd9c8a3ab3?q=80&w=7000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .box {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 2rem;
+        }
+
+        button {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            background: white;
+            color: #4475ef;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body >
+
+    <div class="box">
+        <h1>Welcome 🌤️</h1>
+        <p>Click the button to know the weather of <b>Gummersbach</b></p>
+
+        <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="city" value="Gummersbach">
+            <button type="submit">Click Here</button>
+        </form>
+    </div>
+
+</body>
+</html>
