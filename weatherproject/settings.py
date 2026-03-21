@@ -17,7 +17,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ALLOWED_HOSTS = ['*'] 
 
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
 UNSPLASH_API_KEY = os.getenv("UNSPLASH_API_KEY")
@@ -34,8 +33,7 @@ SECRET_KEY = 'django-insecure-s+fe@ex#+v5x753sqp!u7w+g^opnl+vc3ekhss^2&-h8qmjj4s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['my-weather-app-agix.onrender.com']
 
 # Application definition
 
